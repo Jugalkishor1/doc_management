@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   end
 
   namespace :data_entry_operator do
-    get 'dashboard/index'
+    resources :documents, only: [:index, :show] do
+      member do
+        patch :verify
+      end
+    end
   end
 
   namespace :supervisor do

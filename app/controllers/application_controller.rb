@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     when "supervisor"
       supervisor_dashboard_index_path
     when "data_entry_operator"
-      data_entry_operator_dashboard_index_path
+      data_entry_operator_documents_path
     when "client"
       client_documents_path
     else

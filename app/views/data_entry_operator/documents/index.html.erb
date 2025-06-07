@@ -1,0 +1,11 @@
+<h1>Documents from Clients</h1>
+
+<% @documents.each do |doc| %>
+  <p>
+    <%= link_to doc.file.filename, url_for(doc.file), target: "_blank" %>
+    - Status: <%= doc.status&.humanize %>
+    <% if doc.uploaded? %>
+      <%= button_to "Verify", verify_data_entry_operator_document_path(doc), method: :patch %>
+    <% end %>
+  </p>
+<% end %>
