@@ -20,4 +20,7 @@ class User < ApplicationRecord
 
   belongs_to :data_entry_operator, class_name: 'User', optional: true
   has_many :clients, class_name: 'User', foreign_key: 'data_entry_operator_id'
+
+  has_many :documents, dependent: :destroy
+
 end
