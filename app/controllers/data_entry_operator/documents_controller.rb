@@ -3,6 +3,7 @@ class DataEntryOperator::DocumentsController < ApplicationController
   before_action :check_data_entry_operator
 
   def index
+    @clients = current_user.clients
     @documents = Document.joins(:user).where(users: { data_entry_operator_id: current_user.id })
   end
 
