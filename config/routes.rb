@@ -28,7 +28,8 @@ Rails.application.routes.draw do
   end
 
   namespace :super_admin do
-    get 'dashboard/index'
+    get "dashboard", to: "dashboard#index"
+    resources :users, only: [:index, :edit, :update]
   end
 
   root to: redirect('/users/sign_in')

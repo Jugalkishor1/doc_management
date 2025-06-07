@@ -1,0 +1,26 @@
+<h1>All Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Manager</th>
+      <th>Supervisor</th>
+      <th>Data Entry Operator</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.role.titleize %></td>
+        <td><%= user.manager&.email %></td>
+        <td><%= user.supervisor&.email %></td>
+        <td><%= user.data_entry_operator&.email %></td>
+        <td><%= link_to "Edit", edit_super_admin_user_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

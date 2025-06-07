@@ -1,0 +1,27 @@
+<h1>Edit Assignments for <%= @user.email %></h1>
+
+<%= form_with model: [:super_admin, @user], local: true do |f| %>
+
+  <% if @user.client? || @user.data_entry_operator? || @user.supervisor? %>
+    <div>
+      <%= f.label :manager_id %>
+      <%= f.collection_select :manager_id, @managers, :id, :email, include_blank: true %>
+    </div>
+  <% end %>
+
+  <% if @user.client? || @user.data_entry_operator? %>
+    <div>
+      <%= f.label :supervisor_id %>
+      <%= f.collection_select :supervisor_id, @supervisors, :id, :email, include_blank: true %>
+    </div>
+  <% end %>
+
+  <% if @user.client? %>
+    <div>
+      <%= f.label :data_entry_operator_id %>
+      <%= f.collection_select :data_entry_operator_id, @data_entry_operators, :id, :email, include_blank: true %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Update" %>
+<% end %>
