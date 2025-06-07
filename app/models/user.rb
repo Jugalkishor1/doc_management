@@ -11,4 +11,13 @@ class User < ApplicationRecord
     data_entry_operator: 3,
     client: 4
   }
+
+  belongs_to :manager, class_name: 'User', optional: true
+  has_many :supervisors, class_name: 'User', foreign_key: 'manager_id'
+
+  belongs_to :supervisor, class_name: 'User', optional: true
+  has_many :data_entry_operators, class_name: 'User', foreign_key: 'supervisor_id'
+
+  belongs_to :data_entry_operator, class_name: 'User', optional: true
+  has_many :clients, class_name: 'User', foreign_key: 'data_entry_operator_id'
 end
