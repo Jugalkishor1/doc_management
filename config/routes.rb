@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   end
 
   namespace :supervisor do
-    get 'dashboard/index'
+    resources :documents, only: [:index, :show] do
+      member do
+        patch :verify
+      end
+    end
   end
 
   namespace :manager do
