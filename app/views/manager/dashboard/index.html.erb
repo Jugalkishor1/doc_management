@@ -1,1 +1,43 @@
-<h1>Welcome, <%= current_user.role.titleize %></h1>
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">
+    Welcome, <%= current_user.role.titleize %>
+  </h1>
+
+  <h1 class="text-2xl font-semibold text-gray-800 mb-4">Manager Dashboard</h1>
+
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700 mb-2">Supervisors</h2>
+    <ul class="list-disc list-inside space-y-1 text-gray-600">
+      <% @supervisors.each do |s| %>
+        <li><%= s.email %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700 mb-2">Data Entry Operators</h2>
+    <ul class="list-disc list-inside space-y-1 text-gray-600">
+      <% @data_entry_operators.each do |deo| %>
+        <li><%= deo.email %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700 mb-2">Clients</h2>
+    <ul class="list-disc list-inside space-y-1 text-gray-600">
+      <% @clients.each do |c| %>
+        <li><%= c.email %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-semibold text-gray-700 mb-2">Documents</h2>
+    <ul class="list-disc list-inside space-y-1 text-gray-600">
+      <% @documents.each do |doc| %>
+        <li><%= doc.file.filename %> - <span class="italic"><%= doc.status %></span></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
