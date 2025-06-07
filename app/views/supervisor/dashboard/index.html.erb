@@ -1,1 +1,24 @@
 <h1>Welcome, <%= current_user.role.titleize %></h1>
+
+<h1>Supervisor Dashboard</h1>
+
+<h2>Data Entry Operators</h2>
+<ul>
+  <% @data_entry_operators.each do |deo| %>
+    <li><%= deo.email %></li>
+  <% end %>
+</ul>
+
+<h2>Clients</h2>
+<ul>
+  <% @clients.each do |c| %>
+    <li><%= c.email %></li>
+  <% end %>
+</ul>
+
+<h2>Documents</h2>
+<ul>
+  <% @documents.each do |doc| %>
+    <li><%= doc.file.filename %> - <%= doc.status %></li>
+  <% end %>
+</ul>
