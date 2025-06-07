@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     when "data_entry_operator"
       data_entry_operator_dashboard_index_path
     when "client"
-      client_dashboard_path
+      client_documents_path
     else
       root_path
     end

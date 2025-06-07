@@ -1,0 +1,6 @@
+<h1>Document</h1>
+
+<p>Status: <%= @document.status.humanize %></p>
+<p>
+  <%= link_to @document.file.filename, url_for(@document.file), target: "_blank" %>
+</p>

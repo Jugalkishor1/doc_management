@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :client do
-    resources 
+    resources :documents, only: [:index, :new, :create, :show]
   end
 
   namespace :data_entry_operator do

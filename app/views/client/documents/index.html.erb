@@ -1,0 +1,11 @@
+<h1>Your Documents</h1>
+
+<%= link_to "Upload New", new_client_document_path %>
+
+<ul>
+  <% @documents.each do |doc| %>
+    <li>
+      <%= link_to doc.file.filename, client_document_path(doc) %> ----------- Status: <%= doc.status %>
+    </li>
+  <% end %>
+</ul>
