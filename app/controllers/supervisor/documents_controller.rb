@@ -3,7 +3,7 @@ class Supervisor::DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @data_entry_operators = current_user.data_entry_operators
+    @data_entry_operators = current_user.data_entry_operators.where(role: :data_entry_operator)
     @clients = User.where(data_entry_operator_id: @data_entry_operators.pluck(:id))
     @documents = Document.where(user_id: @clients.pluck(:id))
   end
