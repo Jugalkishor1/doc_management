@@ -23,4 +23,10 @@ class User < ApplicationRecord
 
   has_many :documents, dependent: :destroy
 
+  before_create :assign_default_role
+
+  private
+  def assign_default_role
+    self.role ||= 'client'
+  end
 end

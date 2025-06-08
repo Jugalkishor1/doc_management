@@ -8,8 +8,8 @@
     </div>
 
     <div class="mb-4">
-      <%= form.label :role, class: "block text-gray-700 font-semibold mb-1" %>
-      <%= form.select :role, User.roles.keys.map { |r| [r.titleize, r] }, {}, class: "w-full px-4 py-2 border rounded-md", disabled: true %>
+      <%= form.label :role, class: "block font-medium text-gray-700" %>
+      <%= form.select :role, User.roles.keys.map { |r| [r.titleize, r] }, {}, class: "w-full p-2 border rounded" %>
     </div>
 
     <% if @user.supervisor? %>
@@ -44,7 +44,7 @@
 
       <div class="mb-4">
         <%= form.label :data_entry_operator_id, "Assign Data Entry Operator", class: "block text-gray-700 font-semibold mb-1" %>
-        <%= form.collection_select :data_entry_operator_id, @data_entry_operators, :id, :email, { include_blank: "Select DEO" }, class: "w-full px-4 py-2 border rounded-md" %>
+        <%= form.collection_select :data_entry_operator_id, @deos, :id, :email, { include_blank: "Select DEO" }, class: "w-full px-4 py-2 border rounded-md" %>
       </div>
     <% end %>
 

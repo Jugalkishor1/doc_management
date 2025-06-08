@@ -8,7 +8,9 @@ class SuperAdmin::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    load_assignables
+    @managers = User.where(role: "manager")
+    @supervisors = User.where(role: "supervisor")
+    @deos = User.where(role: "data_entry_operator")
   end
 
   def update
@@ -24,7 +26,7 @@ class SuperAdmin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:manager_id, :supervisor_id, :data_entry_operator_id)
+    params.require(:user).permit(:role, :manager_id, :supervisor_id, :data_entry_operator_id)
   end
 
   def load_assignables
