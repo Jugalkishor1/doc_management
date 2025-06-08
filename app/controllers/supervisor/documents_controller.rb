@@ -3,8 +3,9 @@ class Supervisor::DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    deo_ids = current_user.data_entry_operators.pluck(:id)
-    @documents = Document.joins(:user).where(users: { data_entry_operator_id: deo_ids })
+    @data_entry_operators = current_user.data_entry_operators
+    @clients = User.where(data_entry_operator_id: @data_entry_operators.pluck(:id))
+    @documents = Document.where(user_id: @clients.pluck(:id))
   end
 
   def show

@@ -1,43 +1,69 @@
-<div class="max-w-4xl mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6">
-    Welcome, <%= current_user.role.titleize %>
-  </h1>
+<div class="max-w-5xl mx-auto px-6 py-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome, <%= current_user.role.titleize %></h1>
+  <p class="text-lg text-gray-600 mb-8">Here is a summary of your assigned team and documents.</p>
 
-  <h1 class="text-2xl font-semibold text-gray-800 mb-4">Manager Dashboard</h1>
-
-  <div class="mb-6">
-    <h2 class="text-xl font-semibold text-gray-700 mb-2">Supervisors</h2>
-    <ul class="list-disc list-inside space-y-1 text-gray-600">
-      <% @supervisors.each do |s| %>
-        <li><%= s.email %></li>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-700 mb-3">Supervisors</h2>
+      <% if @supervisors.any? %>
+        <ul class="space-y-2 text-gray-600">
+          <% @supervisors.each do |s| %>
+            <li class="border-b pb-1"><%= s.email %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-sm text-gray-500 italic">No supervisors assigned yet.</p>
       <% end %>
-    </ul>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-gray-700 mb-3">Data Entry Operators</h2>
+      <% if @data_entry_operators.any? %>
+        <ul class="space-y-2 text-gray-600">
+          <% @data_entry_operators.each do |deo| %>
+            <li class="border-b pb-1"><%= deo.email %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-sm text-gray-500 italic">No data entry operators assigned.</p>
+      <% end %>
+    </div>
   </div>
 
-  <div class="mb-6">
-    <h2 class="text-xl font-semibold text-gray-700 mb-2">Data Entry Operators</h2>
-    <ul class="list-disc list-inside space-y-1 text-gray-600">
-      <% @data_entry_operators.each do |deo| %>
-        <li><%= deo.email %></li>
-      <% end %>
-    </ul>
+  <div class="mb-8 bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold text-gray-700 mb-3">Clients</h2>
+    <% if @clients.any? %>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-600">
+        <% @clients.each do |c| %>
+          <li class="border rounded px-3 py-2 bg-gray-50"><%= c.email %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-gray-500 italic">No clients assigned.</p>
+    <% end %>
   </div>
 
-  <div class="mb-6">
-    <h2 class="text-xl font-semibold text-gray-700 mb-2">Clients</h2>
-    <ul class="list-disc list-inside space-y-1 text-gray-600">
-      <% @clients.each do |c| %>
-        <li><%= c.email %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div>
-    <h2 class="text-xl font-semibold text-gray-700 mb-2">Documents</h2>
-    <ul class="list-disc list-inside space-y-1 text-gray-600">
-      <% @documents.each do |doc| %>
-        <li><%= doc.file.filename %> - <span class="italic"><%= doc.status %></span></li>
-      <% end %>
-    </ul>
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold text-gray-700 mb-3">Client Documents</h2>
+    <% if @documents.any? %>
+      <ul class="divide-y divide-gray-200 text-gray-700">
+        <% @documents.each do |doc| %>
+          <li class="py-2 flex justify-between items-center">
+            <span><%= doc.file.filename %></span>
+            <span class="text-sm font-medium px-2 py-1 rounded
+              <%= case doc.status
+                  when 'uploaded' then 'bg-yellow-100 text-yellow-800'
+                  when 'verified_by_data_entry_operator' then 'bg-blue-100 text-blue-800'
+                  when 'verified_by_supervisor' then 'bg-green-100 text-green-800'
+                  else 'bg-gray-100 text-gray-700'
+                end %>">
+              <%= doc.status.humanize %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-gray-500 italic">No documents uploaded yet.</p>
+    <% end %>
   </div>
 </div>

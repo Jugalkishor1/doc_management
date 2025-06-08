@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :client do
-    resources :dashboard, only: [:index]
+    resources :dashboard, only: [:index, :show]
     resources :documents, only: [:index, :new, :create, :show]
   end
 

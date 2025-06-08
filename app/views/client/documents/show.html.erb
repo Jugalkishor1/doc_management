@@ -1,6 +1,16 @@
-<h1>Document</h1>
+<div class="max-w-xl mx-auto px-4 py-8 bg-white shadow rounded">
+  <h1 class="text-2xl font-bold mb-4">Document Details</h1>
 
-<p>Status: <%= @document.status.humanize %></p>
-<p>
-  <%= link_to @document.file.filename, url_for(@document.file), target: "_blank" %>
-</p>
+  <p class="mb-2 text-gray-700">
+    <strong>Status:</strong> <span class="text-indigo-600"><%= @document.status.humanize %></span>
+  </p>
+
+  <p class="mb-4 text-gray-700">
+    <strong>File:</strong>
+    <%= link_to @document.file.filename, url_for(@document.file), target: "_blank",
+          class: "text-blue-600 underline hover:text-blue-800" %>
+  </p>
+
+  <%= link_to "Back to Documents", client_documents_path,
+        class: "inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded" %>
+</div>

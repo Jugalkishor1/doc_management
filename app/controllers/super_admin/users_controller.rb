@@ -3,7 +3,7 @@ class SuperAdmin::UsersController < ApplicationController
   before_action :ensure_super_admin!
 
   def index
-    @users = User.all.includes(:manager, :supervisor, :data_entry_operator)
+    @users = User.where.not(id: current_user.id).all.includes(:manager, :supervisor, :data_entry_operator)
   end
 
   def edit

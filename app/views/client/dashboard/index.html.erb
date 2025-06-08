@@ -1,11 +1,32 @@
-<h1>Welcome, <%= current_user.role.titleize %></h1>
-<h1>Client Dashboard</h1>
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Your Documents</h1>
 
-<%= link_to "Upload New Document", new_client_document_path %>
+  <div class="mb-4">
+    <%= link_to "Upload New Document", new_client_document_path,
+        class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
+  </div>
 
-<ul>
-  <% @documents.each do |doc| %>
-    <li> <%= doc.id %> </li>
-    <li><%= doc.file.filename %> - <%= doc.status %></li>
-  <% end %>
-</ul>
+  <table class="min-w-full bg-white shadow rounded">
+    <thead>
+      <tr class="bg-gray-200 text-left">
+        <th class="px-4 py-2">File</th>
+        <th class="px-4 py-2">Status</th>
+        <th class="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @documents.each do |doc| %>
+        <tr class="border-b">
+          <td class="px-4 py-2">
+            <%= link_to doc.file.filename, client_document_path(doc), class: "text-blue-600 underline" %>
+          </td>
+          <td class="px-4 py-2"><%= doc.status.humanize %></td>
+          <td class="px-4 py-2">
+            <%= link_to "View", client_document_path(doc),
+                  class: "text-blue-500 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

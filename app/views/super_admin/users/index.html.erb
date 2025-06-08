@@ -1,26 +1,46 @@
-<h1>All Users</h1>
+<div class="max-w-7xl mx-auto px-6 py-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">All Users</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Manager</th>
-      <th>Supervisor</th>
-      <th>Data Entry Operator</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.email %></td>
-        <td><%= user.role.titleize %></td>
-        <td><%= user.manager&.email %></td>
-        <td><%= user.supervisor&.email %></td>
-        <td><%= user.data_entry_operator&.email %></td>
-        <td><%= link_to "Edit", edit_super_admin_user_path(user) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-sm text-left text-gray-600">
+      <thead class="bg-gray-100 text-gray-700 text-sm uppercase">
+        <tr>
+          <th class="px-6 py-3">Email</th>
+          <th class="px-6 py-3">Role</th>
+          <th class="px-6 py-3">Manager</th>
+          <th class="px-6 py-3">Supervisor</th>
+          <th class="px-6 py-3">Data Entry Operator</th>
+          <th class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4"><%= user.email %></td>
+            <td class="px-6 py-4">
+              <span class="inline-block px-2 py-1 rounded text-white
+                <%= case user.role
+                  when 'manager' then 'bg-purple-600'
+                  when 'supervisor' then 'bg-blue-600'
+                  when 'data_entry_operator' then 'bg-green-600'
+                  when 'client' then 'bg-yellow-500 text-gray-800'
+                  else 'bg-gray-600'
+                end %>">
+                <%= user.role.titleize %>
+              </span>
+            </td>
+            <td class="px-6 py-4"><%= user.manager&.email || "-" %></td>
+            <td class="px-6 py-4"><%= user.supervisor&.email || "-" %></td>
+            <td class="px-6 py-4"><%= user.data_entry_operator&.email || "-" %></td>
+            <td class="px-4 py-2 space-x-2">
+              <%= link_to "Edit", edit_super_admin_user_path(user), class: "text-indigo-600 hover:underline" %>
+              <% if user.client? %>
+                <%= link_to "View", client_dashboard_path(user), class: "text-blue-600 hover:underline" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
