@@ -17,7 +17,7 @@ class Ability
     when "supervisor"
       can :read, User, id: user.data_entry_operator_ids
       can :read, Document, user_id: user.client_ids
-      can :manage, Document, user_id: user.client_ids
+      can :manage, Document, user_id: user.data_entry_operator_ids
 
     when "data_entry_operator"
       can :read, User, id: user.client_ids

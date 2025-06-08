@@ -14,11 +14,11 @@ class Supervisor::DocumentsController < ApplicationController
 
   def verify
     @document = Document.find(params[:id])
-    if @document.verified_by_data_entry_operator?
+    if @document.uploaded?
       @document.update(status: :verified_by_supervisor)
       redirect_to supervisor_documents_path, notice: "Document verified by Supervisor."
     else
-      redirect_to supervisor_documents_path, alert: "Only DEO-verified documents can be verified."
+      redirect_to supervisor_documents_path, alert: "Cannot verify."
     end
   end
 end
