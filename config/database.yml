@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: doc_manager_production
-  username: doc_manager
-  password: <%= ENV["DOC_MANAGER_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
