@@ -1,6 +1,6 @@
 class DataEntryOperator::DocumentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_data_entry_operator
+  load_and_authorize_resource
 
   def index
     @clients = current_user.clients

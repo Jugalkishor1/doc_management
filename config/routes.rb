@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get 'home/redirect_user'
   get "up" => "rails/health#show", as: :rails_health_check
-
+  
+  root to: "home#redirect_user"
+  
   devise_for :users
 
   namespace :client do
@@ -33,5 +36,4 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :edit, :update]
   end
 
-  root to: redirect('/users/sign_in')
 end

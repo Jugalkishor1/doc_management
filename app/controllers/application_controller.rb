@@ -1,20 +1,9 @@
 class ApplicationController < ActionController::Base
+  include CanCan::ControllerAdditions
+
   before_action :authenticate_user!
 
-  def after_sign_in_path_for(resource)
-    case resource.role
-    when "super_admin"
-      super_admin_users_path
-    when "manager"
-      manager_dashboard_index_path
-    when "supervisor"
-      supervisor_documents_path
-    when "data_entry_operator"
-      data_entry_operator_documents_path
-    when "client"
-      client_dashboard_index_path
-    else
-      root_path
-    end
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: "You are not authorized to access this page."
   end
 end

@@ -1,6 +1,6 @@
 class Client::DocumentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_client!
+  load_and_authorize_resource
 
   def index
     @documents = current_user.documents
@@ -27,9 +27,5 @@ class Client::DocumentsController < ApplicationController
 
   def document_params
     params.require(:document).permit(:file)
-  end
-
-  def check_client!
-    redirect_to root_path unless current_user.client?
   end
 end
