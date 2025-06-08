@@ -15,14 +15,14 @@ class Ability
       can :read, Document
 
     when "supervisor"
-      can :read, User, data_entry_operator_id: user.data_entry_operator_ids
-      can :read, Document
+      can :read, User, id: user.data_entry_operator_ids
+      can :read, Document, user_id: user.client_ids
+      can :manage, Document, user_id: user.client_ids
 
     when "data_entry_operator"
-      binding.irb
       can :read, User, id: user.client_ids
-      can :read, Document, client_id: user.client_ids
-      can :update, Document, client_id: user.client_ids
+      can :read, Document, user_id: user.client_ids
+      can :manage, Document, user_id: user.client_ids
 
     when "client"
       can :read, Document, user_id: user.id
