@@ -1,0 +1,28 @@
+<nav class="bg-white shadow mb-6">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div>
+      <span class="font-bold text-xl text-blue-600">DocManager</span>
+    </div>
+
+    <div class="space-x-4">
+      <% if user_signed_in? %>
+        <% if current_user.super_admin? %>
+          <%= link_to "Users", super_admin_users_path, class: "text-blue-600 hover:underline" %>
+        <% elsif current_user.manager? %>
+          <%= link_to "Dashboard", manager_dashboard_index_path, class: "text-blue-600 hover:underline" %>
+        <% elsif current_user.supervisor? %>
+          <%= link_to "Documents", supervisor_documents_path, class: "text-blue-600 hover:underline" %>
+        <% elsif current_user.data_entry_operator? %>
+          <%= link_to "Documents", data_entry_operator_documents_path, class: "text-blue-600 hover:underline" %>
+        <% elsif current_user.client? %>
+          <%= link_to "Dashboard", client_dashboard_index_path, class: "text-blue-600 hover:underline" %>
+        <% end %>
+
+        <%= link_to "Logout", destroy_user_session_path, data: { "turbo-method": :delete }, class: "text-red-500 hover:underline" %>
+
+      <% else %>
+        <%= link_to "Login", new_user_session_path, class: "text-blue-600 hover:underline" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

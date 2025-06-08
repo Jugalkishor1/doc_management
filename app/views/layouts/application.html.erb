@@ -11,22 +11,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <div class="container">
-      <% if flash[:alert] %>
-        <div class="alert alert-danger">
-          <%= flash[:alert] %>
-        </div>
-      <% elsif flash[:notice] %>
-        <div class="alert alert-success">
-          <%= flash[:notice] %>
-        </div>
+  <body class="bg-gray-100 text-gray-900">
+    <%= render 'base/header' %>
+
+    <div class="max-w-7xl mx-auto px-4">
+      <% if notice %>
+        <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4"><%= notice %></div>
+      <% end %>
+
+      <% if alert %>
+        <div class="bg-red-100 text-red-800 px-4 py-2 rounded mb-4"><%= alert %></div>
       <% end %>
 
       <%= yield %>
-      <br>
-      <%= button_to("Log Out",destroy_user_session_path, method: :delete) %>
-    </main>
+    </div>
   </body>
 </html>
