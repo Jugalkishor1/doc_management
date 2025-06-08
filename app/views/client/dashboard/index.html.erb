@@ -1,1 +1,10 @@
 <h1>Welcome, <%= current_user.role.titleize %></h1>
+<h1>Client Dashboard</h1>
+
+<%= link_to "Upload New Document", new_client_document_path %>
+
+<ul>
+  <% @documents.each do |doc| %>
+    <li><%= doc.file.filename %> - <%= doc.status %></li>
+  <% end %>
+</ul>
