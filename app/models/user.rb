@@ -23,10 +23,25 @@ class User < ApplicationRecord
 
   has_many :documents, dependent: :destroy
 
-  before_create :assign_default_role
+  before_save :clear_invalid_assignments, if: :role_changed?
 
   private
-  def assign_default_role
-    self.role ||= 'client'
+
+  def clear_invalid_assignments
+    case role
+    when "super_admin"
+      self.manager_id = nil
+      self.supervisor_id = nil
+      self.data_entry_operator_id = nil
+    when "manager"
+      self.manager_id = nil
+      self.supervisor_id = nil
+      self.data_entry_operator_id = nil
+    when "supervisor"
+      self.supervisor_id = nil
+      self.data_entry_operator_id = nil
+    when "data_entry_operator"
+      self.data_entry_operator_id = nil
+    end
   end
 end
