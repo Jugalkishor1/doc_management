@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
 
   namespace :manager do
-    get 'dashboard/index'
+    resources :dashboard, only: [:index]
   end
 
   namespace :super_admin do

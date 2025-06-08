@@ -5,6 +5,7 @@
 
 <ul>
   <% @documents.each do |doc| %>
+    <li> <%= doc.id %> </li>
     <li><%= doc.file.filename %> - <%= doc.status %></li>
   <% end %>
 </ul>

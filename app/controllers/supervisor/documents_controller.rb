@@ -1,6 +1,6 @@
 class Supervisor::DocumentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_supervisor
+  load_and_authorize_resource
 
   def index
     deo_ids = current_user.data_entry_operators.pluck(:id)
@@ -19,11 +19,5 @@ class Supervisor::DocumentsController < ApplicationController
     else
       redirect_to supervisor_documents_path, alert: "Only DEO-verified documents can be verified."
     end
-  end
-
-  private
-
-  def check_supervisor
-    redirect_to root_path unless current_user.supervisor?
   end
 end

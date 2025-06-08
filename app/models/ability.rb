@@ -19,6 +19,7 @@ class Ability
       can :read, Document
 
     when "data_entry_operator"
+      binding.irb
       can :read, User, id: user.client_ids
       can :read, Document, client_id: user.client_ids
       can :update, Document, client_id: user.client_ids
