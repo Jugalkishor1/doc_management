@@ -1,0 +1,55 @@
+<div class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-2xl font-bold mb-6">Edit User</h1>
+
+  <%= form_with model: [:super_admin, @user], local: true do |form| %>
+    <div class="mb-4">
+      <%= form.label :email, class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.email_field :email, class: "w-full px-4 py-2 border rounded-md" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :role, class: "block font-medium text-gray-700" %>
+      <%= form.select :role, User.roles.keys.map { |r| [r.titleize, r] }, {}, class: "w-full p-2 border rounded" %>
+    </div>
+
+    <% if @user.supervisor? %>
+      <div class="mb-4">
+        <%= form.label :manager_id, "Assign Manager", class: "block text-gray-700 font-semibold mb-1" %>
+        <%= form.collection_select :manager_id, @managers, :id, :email, { include_blank: "Select Manager" }, class: "w-full px-4 py-2 border rounded-md" %>
+      </div>
+    <% end %>
+
+    <% if @user.data_entry_operator? %>
+      <div class="mb-4">
+        <%= form.label :manager_id, "Assign Manager", class: "block text-gray-700 font-semibold mb-1" %>
+        <%= form.collection_select :manager_id, @managers, :id, :email, { include_blank: "Select Manager" }, class: "w-full px-4 py-2 border rounded-md" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :supervisor_id, "Assign Supervisor", class: "block text-gray-700 font-semibold mb-1" %>
+        <%= form.collection_select :supervisor_id, @supervisors, :id, :email, { include_blank: "Select Supervisor" }, class: "w-full px-4 py-2 border rounded-md" %>
+      </div>
+    <% end %>
+
+    <% if @user.client? %>
+      <div class="mb-4">
+        <%= form.label :manager_id, "Assign Manager", class: "block text-gray-700 font-semibold mb-1" %>
+        <%= form.collection_select :manager_id, @managers, :id, :email, { include_blank: "Select Manager" }, class: "w-full px-4 py-2 border rounded-md" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :supervisor_id, "Assign Supervisor", class: "block text-gray-700 font-semibold mb-1" %>
+        <%= form.collection_select :supervisor_id, @supervisors, :id, :email, { include_blank: "Select Supervisor" }, class: "w-full px-4 py-2 border rounded-md" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :data_entry_operator_id, "Assign Data Entry Operator", class: "block text-gray-700 font-semibold mb-1" %>
+        <%= form.collection_select :data_entry_operator_id, @deos, :id, :email, { include_blank: "Select DEO" }, class: "w-full px-4 py-2 border rounded-md" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6">
+      <%= form.submit "Update User", class: "bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>

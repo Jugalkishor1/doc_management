@@ -1,0 +1,2 @@
+module DataEntryOperator::DocumentsHelper
+end

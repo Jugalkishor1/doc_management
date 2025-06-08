@@ -1,0 +1,72 @@
+<p class="mb-6 text-gray-600 italic">
+  Logged in as <strong><%= current_user.email %></strong> (<%= current_user.role.capitalize %>)
+</p>
+
+<h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+
+<h2 class="text-xl font-semibold mb-2">Data Entry Operators</h2>
+<ul class="mb-6 list-disc list-inside text-gray-700">
+  <% @data_entry_operators.each do |deo| %>
+    <li><%= deo.email %></li>
+  <% end %>
+</ul>
+
+<h2 class="text-xl font-semibold mb-2">Clients</h2>
+<ul class="mb-6 list-disc list-inside text-gray-700">
+  <% @clients.each do |client| %>
+    <li><%= client.email %></li>
+  <% end %>
+</ul>
+
+<h1 class="text-4xl font-bold mb-8 text-gray-800">Client Documents</h1>
+
+<div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+  <table class="min-w-full table-auto border-collapse text-sm">
+    <thead>
+      <tr class="bg-gray-100 text-gray-700 uppercase">
+        <th class="px-6 py-4 text-left">File</th>
+        <th class="px-6 py-4 text-left">Client</th>
+        <th class="px-6 py-4 text-left">Data Entry Operator</th>
+        <th class="px-6 py-4 text-left">Status</th>
+        <th class="px-6 py-4 text-left">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @documents.each do |doc| %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4">
+            <%= link_to doc.file.filename, url_for(doc.file), class: "text-blue-600 underline", target: "_blank" %>
+          </td>
+
+          <td class="px-6 py-4">
+            <%= doc.user.email %>
+          </td>
+
+          <td class="px-6 py-4">
+            <%= doc.user.data_entry_operator&.email || "N/A" %>
+          </td>
+
+          <td class="px-6 py-4">
+            <% case doc.status %>
+              <% when "uploaded" %>
+                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs">Uploaded</span>
+              <% when "verified_by_data_entry_operator" %>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs">Verified by DEO</span>
+              <% when "verified_by_supervisor" %>
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs">Verified by Supervisor</span>
+            <% end %>
+          </td>
+
+          <td class="px-6 py-4">
+            <% if !doc.verified_by_data_entry_operator? && !doc.verified_by_supervisor? %>
+              <%= button_to "Verify", verify_supervisor_document_path(doc), method: :patch,
+                    class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm" %>
+            <% else %>
+              <span class="text-gray-500 italic text-sm">Already Verified</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

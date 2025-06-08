@@ -1,0 +1,25 @@
+<div class="max-w-3xl mx-auto px-4 py-8 bg-white shadow rounded">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Your Documents</h1>
+    <%= link_to "Upload New", new_client_document_path,
+          class: "bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded shadow" %>
+  </div>
+
+  <% if @documents.any? %>
+    <ul class="space-y-4">
+      <% @documents.each do |doc| %>
+        <li class="border border-gray-200 rounded px-4 py-3 bg-gray-50 flex justify-between items-center">
+          <div>
+            <%= link_to doc.file.filename, client_document_path(doc),
+                  class: "text-blue-600 hover:underline font-medium" %>
+            <div class="text-sm text-gray-600 mt-1">
+              Status: <span class="font-semibold text-indigo-600"><%= doc.status.humanize %></span>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-gray-600 italic">No documents uploaded yet.</p>
+  <% end %>
+</div>

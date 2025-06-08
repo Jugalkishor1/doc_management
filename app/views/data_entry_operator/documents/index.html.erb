@@ -1,0 +1,41 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Data Entry Operator Dashboard</h1>
+
+  <h2 class="text-xl font-semibold mb-2">Clients</h2>
+  <ul class="list-disc list-inside mb-6 text-gray-700">
+    <% @clients.each do |client| %>
+      <li><%= client.email %></li>
+    <% end %>
+  </ul>
+
+  <h2 class="text-xl font-semibold mb-2">Documents</h2>
+  <table class="min-w-full bg-white rounded shadow">
+    <thead>
+      <tr class="bg-gray-200 text-left">
+        <th class="px-4 py-2">File</th>
+        <th class="px-4 py-2">Client</th>
+        <th class="px-4 py-2">Status</th>
+        <th class="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @documents.each do |doc| %>
+        <tr class="border-b">
+          <td class="px-4 py-2">
+            <%= link_to doc.file.filename, url_for(doc.file), class: "text-blue-600 underline", target: "_blank" %>
+          </td>
+          <td class="px-4 py-2"><%= doc.user.email %></td>
+          <td class="px-4 py-2"><%= doc.status.humanize %></td>
+          <td class="px-4 py-2">
+            <% if doc.uploaded? %>
+              <%= button_to "Verify", verify_data_entry_operator_document_path(doc), method: :patch,
+                    class: "bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded" %>
+            <% else %>
+              <span class="text-gray-500 italic">Already Verified</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
